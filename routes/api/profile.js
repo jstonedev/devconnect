@@ -267,7 +267,7 @@ router.put(
 			description,
 		} = req.body;
 
-		const newEd = {
+		const newEdu = {
 			school,
 			degree,
 			fieldofstudy,
@@ -280,7 +280,7 @@ router.put(
 		try {
 			const profile = await Profile.findOne({ user: req.user.id });
 
-			profile.education.unshift(newEd);
+			profile.education.unshift(newEdu);
 
 			await profile.save();
 
@@ -292,17 +292,17 @@ router.put(
 	}
 );
 
-// @route   DELETE api/profile/education/:ed_id
+// @route   DELETE api/profile/education/:edu_id
 // @desc    Delete profile education
 // @access  Private
-router.delete("/education/:ed_id", auth, async (req, res) => {
+router.delete("/education/:edu_id", auth, async (req, res) => {
 	try {
 		const profile = await Profile.findOne({ user: req.user.id });
 
 		// Get remove index
 		const removeIndex = profile.education
 			.map((item) => item.id)
-			.indexOf(req.params.ed_id);
+			.indexOf(req.params.edu_id);
 
 		profile.education.splice(removeIndex, 1);
 
