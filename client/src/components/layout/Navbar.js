@@ -1,22 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Landing } from "./Landing";
+import { Register } from "../auth/Register";
+import { Login } from "../auth/Login";
 
 export const Navbar = () => {
 	return (
 		<nav className="navbar bg-dark">
 			<h1>
-				<a href="#!">
+				<Link to="/">
 					<i className="fas fa-code">DevConnect</i>
-				</a>
+				</Link>
 			</h1>
 			<ul>
 				<li>
 					<a href="#!">Developers</a>
 				</li>
 				<li>
-					<a href="#!">Register</a>
+					<Link to="/register">Register</Link>
 				</li>
 				<li>
-					<a href="#!">Login</a>
+					<Link to="/login">Login</Link>
 				</li>
 			</ul>
 		</nav>
