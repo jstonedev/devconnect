@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Landing } from "./Landing";
-import { Register } from "../auth/Register";
-import { Login } from "../auth/Login";
 
 export const Navbar = () => {
 	return (
