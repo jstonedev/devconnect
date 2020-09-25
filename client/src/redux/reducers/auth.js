@@ -5,6 +5,7 @@ import {
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
 	LOGIN_FAIL,
+	LOGOUT,
 } from "../actions/types";
 
 const INITIALSTATE = {
@@ -25,15 +26,8 @@ export default function (state = INITIALSTATE, action) {
 				isLoading: false,
 				user: payload,
 			};
-		case LOGIN_SUCCESS:
-			localStorage.setItem("token", payload.token);
-			return {
-				...state,
-				...payload,
-				isAuthenticated: true,
-				isLoading: false,
-			};
 		case REGISTER_SUCCESS:
+		case LOGIN_SUCCESS:
 			localStorage.setItem("token", payload.token);
 			return {
 				...state,
@@ -44,6 +38,7 @@ export default function (state = INITIALSTATE, action) {
 		case REGISTER_FAIL:
 		case AUTH_ERROR:
 		case LOGIN_FAIL:
+		case LOGOUT:
 			localStorage.removeItem("token");
 			return {
 				...state,
