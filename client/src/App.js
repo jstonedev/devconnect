@@ -32,9 +32,9 @@ const App = () => {
 					<section className="container">
 						<Alert />
 						<Switch>
-							<Route path="/register" component={Register} />
-							<Route path="/login" component={Login} />
-							<PrivateRoute path="/dashboard" component={Dashboard} />
+							<Route exact path="/register" component={Register} />
+							<Route exact path="/login" component={Login} />
+							<PrivateRoute exact path="/dashboard" component={Dashboard} />
 						</Switch>
 					</section>
 				</Fragment>
