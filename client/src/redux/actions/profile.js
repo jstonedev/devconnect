@@ -15,9 +15,6 @@ export const getCurrentProfile = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: {
-				msg: error.response.statusText,
-			},
 		});
 	}
 };
@@ -61,10 +58,6 @@ export const createProfile = (FormData, history, edit = false) => async (
 
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: {
-				msg: error.response.statusText,
-				status: error.response.status,
-			},
 		});
 	}
 };
