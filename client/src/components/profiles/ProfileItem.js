@@ -24,7 +24,7 @@ const ProfileItem = ({
 				</Link>
 			</div>
 			<ul>
-				{skills.slice(0, 4).map((skill, i) => (
+				{skills.slice(0, 5).map((skill, i) => (
 					<li key={i} className="text-primary">
 						<i className="fas fa-check" /> {skill}
 					</li>
