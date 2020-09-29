@@ -43,7 +43,7 @@ const EditProfile = ({
 			blog: isLoading || !profile.social ? "" : profile.social.blog,
 			linkedin: isLoading || !profile.social ? "" : profile.social.linkedin,
 		});
-	}, [isLoading]);
+	}, [isLoading, getCurrentProfile]);
 
 	const {
 		company,
