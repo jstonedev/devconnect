@@ -23,7 +23,7 @@ export const getCurrentProfile = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -42,7 +42,7 @@ export const getProfiles = () => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -59,7 +59,7 @@ export const getProfileById = (userId) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -76,7 +76,7 @@ export const getRepos = (username) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -120,7 +120,7 @@ export const createProfile = (FormData, history, edit = false) => async (
 
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -153,7 +153,7 @@ export const addExperience = (FormData, history) => async (dispatch) => {
 
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -186,7 +186,7 @@ export const addEducation = (FormData, history) => async (dispatch) => {
 
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -205,7 +205,7 @@ export const deleteExperience = (id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -224,7 +224,7 @@ export const deleteEducation = (id) => async (dispatch) => {
 	} catch (error) {
 		dispatch({
 			type: PROFILE_ERROR,
-			payload: error.response.status,
+			payload: { msg: error.response },
 		});
 	}
 };
@@ -244,7 +244,7 @@ export const deleteAccount = () => async (dispatch) => {
 		} catch (error) {
 			dispatch({
 				type: PROFILE_ERROR,
-				payload: error.response.status,
+				payload: { msg: error.response },
 			});
 		}
 	}
