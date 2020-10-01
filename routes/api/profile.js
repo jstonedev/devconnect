@@ -3,6 +3,8 @@ const request = require("request");
 const config = require("config");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
+// bring in normalize to give us a proper url, regardless of what user entered
+const normalize = require("normalize-url");
 
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
@@ -37,8 +39,8 @@ router.post(
 	[
 		auth,
 		[
-			check("status", "Status cannot be blank").not().isEmpty(),
-			check("skills", "Skills cannot be blank").not().isEmpty(),
+			check("status", "Status is required").not().isEmpty(),
+			check("skills", "Skills is required").not().isEmpty(),
 		],
 	],
 	async (req, res) => {
@@ -48,62 +50,54 @@ router.post(
 		}
 		const {
 			company,
-			website,
 			location,
+			website,
 			bio,
+			skills,
 			status,
 			githubusername,
-			skills,
 			youtube,
-			blog,
 			twitter,
-			instagram,
+			blog,
 			linkedin,
+			facebook,
 		} = req.body;
 
-		// Build profile object
-		const profileFields = {};
-		profileFields.user = req.user.id;
-		if (company) profileFields.company = company;
-		if (website) profileFields.website = website;
-		if (location) profileFields.location = location;
-		if (bio) profileFields.bio = bio;
-		if (status) profileFields.status = status;
-		if (githubusername) profileFields.githubusername = githubusername;
-		if (skills) {
-			profileFields.skills = skills.split(",").map((skill) => skill.trim());
+		const profileFields = {
+			user: req.user.id,
+			company,
+			location,
+			website:
+				website && website !== ""
+					? normalize(website, { forceHttps: true })
+					: "",
+			bio,
+			skills: Array.isArray(skills)
+				? skills
+				: skills.split(",").map((skill) => " " + skill.trim()),
+			status,
+			githubusername,
+		};
+
+		// Build social object and add to profileFields
+		const socialfields = { youtube, twitter, blog, linkedin, facebook };
+
+		for (const [key, value] of Object.entries(socialfields)) {
+			if (value && value.length > 0)
+				socialfields[key] = normalize(value, { forceHttps: true });
 		}
+		profileFields.social = socialfields;
 
-		// Build social object
-		profileFields.social = {};
-		if (youtube) profileFields.social.youtube = youtube;
-		if (twitter) profileFields.social.twitter = twitter;
-		if (blog) profileFields.social.blog = blog;
-		if (linkedin) profileFields.social.linkedin = linkedin;
-		if (instagram) profileFields.social.instagram = instagram;
-
-		// Insert data into profile
 		try {
-			let profile = await Profile.findOne({ user: req.user.id });
-
-			if (profile) {
-				// Update Profile
-				profile = await Profile.findOneAndUpdate(
-					{ user: req.user.id },
-					{ $set: profileFields },
-					{ new: true }
-				);
-
-				return res.json(profile);
-			}
-
-			// Create Profile
-			profile = new Profile(profileFields);
-
-			await profile.save();
+			// Using upsert option (creates new doc if no match is found):
+			let profile = await Profile.findOneAndUpdate(
+				{ user: req.user.id },
+				{ $set: profileFields },
+				{ new: true, upsert: true, setDefaultsOnInsert: true }
+			);
 			res.json(profile);
-		} catch (error) {
-			console.error(error.message);
+		} catch (err) {
+			console.error(err.message);
 			res.status(500).send("Server Error");
 		}
 	}
