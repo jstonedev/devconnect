@@ -1,6 +1,7 @@
 import {
 	DELETE_POST,
 	GET_POSTS,
+	CREATE_POST,
 	POST_ERROR,
 	UPDATE_LIKES,
 } from "../actions/types";
@@ -20,6 +21,12 @@ export default function (state = INITIALSTATE, action) {
 			return {
 				...state,
 				posts: payload,
+				isLoading: false,
+			};
+		case CREATE_POST:
+			return {
+				...state,
+				posts: [payload, ...state.posts],
 				isLoading: false,
 			};
 		case DELETE_POST:
