@@ -3,6 +3,7 @@ import { setAlert } from "./alert";
 import {
 	DELETE_POST,
 	GET_POSTS,
+	GET_POST,
 	CREATE_POST,
 	POST_ERROR,
 	UPDATE_LIKES,
@@ -98,6 +99,23 @@ export const createPost = (formData) => async (dispatch) => {
 		dispatch({
 			type: POST_ERROR,
 			payload: { msg: error.response.statusText },
+		});
+	}
+};
+
+// Get post
+export const getPost = (id) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/api/posts/${id}`);
+
+		dispatch({
+			type: GET_POST,
+			payload: res.data,
+		});
+	} catch (error) {
+		dispatch({
+			type: POST_ERROR,
+			payload: error.response,
 		});
 	}
 };
