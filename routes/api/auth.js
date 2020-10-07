@@ -43,16 +43,14 @@ router.post(
 			let user = await User.findOne({ email });
 
 			if (!user) {
-				return res
-					.status(400)
-					.json({
-						errors: [
-							{
-								msg:
-									"Invalid Credentials, please try again or register new account",
-							},
-						],
-					});
+				return res.status(400).json({
+					errors: [
+						{
+							msg:
+								"Invalid Credentials, please try again or register new account",
+						},
+					],
+				});
 			}
 
 			// Compare user password
