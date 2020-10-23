@@ -60,7 +60,7 @@ Check in browser on [http://localhost:5000/](http://localhost:5000/)
 ### Author
 
 Jason Stone
-[Website](https://www.jstonedev.com)
+[Website](https://jstonedev.com)
 
 ### Version
 
